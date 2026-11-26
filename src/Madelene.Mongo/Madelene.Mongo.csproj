@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Madelene.Mongo</RootNamespace>
+    <Description>MongoDB integration for Madelene: change-stream sync, BSON filters and $vectorSearch hydration helpers.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="MongoDB.Driver" Version="3.13.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Madelene.Core\Madelene.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Madelene.Tests" />
+  </ItemGroup>
+</Project>

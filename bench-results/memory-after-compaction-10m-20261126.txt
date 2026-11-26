@@ -1,0 +1,15 @@
+Memory right after compaction, 10M rows (--stream --rows 10000000 --days 10 --bucket-days 1 --ivf-min-rows 500000 --seed 7).
+Both builds ran while a 100M build was compacting on the same machine, so their compaction times are inflated alike.
+Times are UTC.
+
+## 0.1
+[02:52:20] ingest done: 41,778 rows/s (4.0 min) {"Segments":40,"IvfSegments":0,"SegmentRows":10000000,"LiveSegmentRows":10000000,"BufferedRows":0,"DiskBytes":9453418975,"Checkpoint":"bench-ingested"}
+[03:05:54] compaction done in 13.6 min
+[03:05:54] memory after compaction: private 8.72 GB, working set 8.48 GB, GC committed 8.00 GB, GC heap 3.99 GB
+[03:05:55] disk 9.5 GB = 951 B/vector; managed heap 0.07 GB
+
+## 0.2
+[02:33:26] ingest done: 38,340 rows/s (4.3 min) {"Segments":40,"IvfSegments":0,"SegmentRows":10000000,"LiveSegmentRows":10000000,"BufferedRows":0,"DiskBytes":9453418977,"Checkpoint":"bench-ingested"}
+[02:48:14] compaction done in 14.8 min
+[02:48:14] memory after compaction: private 0.95 GB, working set 0.76 GB, GC committed 0.50 GB, GC heap 0.50 GB
+[02:48:14] disk 9.5 GB = 951 B/vector; managed heap 0.07 GB

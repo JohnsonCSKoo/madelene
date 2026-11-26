@@ -1,0 +1,11 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <RootNamespace>Madelene</RootNamespace>
+    <Description>Embedded, disk-resident filtered vector search with a MongoDB $vectorSearch-compatible query surface.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <InternalsVisibleTo Include="Madelene.Tests" />
+    <InternalsVisibleTo Include="Madelene.Mongo" />
+    <InternalsVisibleTo Include="Madelene.Bench" />
+  </ItemGroup>
+</Project>

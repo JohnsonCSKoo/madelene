@@ -1,0 +1,209 @@
+{
+  "options": {
+    "Rows": 2000000,
+    "Dimensions": 768,
+    "Queries": 20,
+    "K": 24,
+    "Candidates": 360,
+    "Days": 2,
+    "BucketDays": 1,
+    "Sources": 200,
+    "Vocabulary": 500,
+    "TokensPerRow": 18,
+    "Clusters": 1000,
+    "ModalityGap": 0.5,
+    "SealRows": 250000,
+    "IvfMinRows": 500000,
+    "ProbeFraction": 0.03,
+    "ExactScanThreshold": 100000,
+    "Keep": false,
+    "Seed": 7,
+    "Stream": true,
+    "ExactMaxRows": 2000000
+  },
+  "ingestRowsPerSecond": 94325.70470580706,
+  "ingestMinutes": 0.35338546833333334,
+  "compactMinutes": 1.2199485866666668,
+  "totalMinutes": 1.63872619,
+  "index": {
+    "Segments": 2,
+    "IvfSegments": 2,
+    "SegmentRows": 2000000,
+    "LiveSegmentRows": 2000000,
+    "BufferedRows": 0,
+    "DiskBytes": 1901958941,
+    "Checkpoint": "bench"
+  },
+  "bytesPerVector": 950.9794705,
+  "managedHeapBytes": 446263080,
+  "workingSetBytes": 5136486400,
+  "results": [
+    {
+      "Scenario": "tenant only",
+      "Selectivity": 1,
+      "RecallAtK": 0.9895833333333334,
+      "P50Ms": 8.3805,
+      "P95Ms": 21.9436,
+      "P99Ms": 39.1334,
+      "AvgRowsScored": 86052.4,
+      "IvfSegmentsPerQuery": 2
+    },
+    {
+      "Scenario": "tenant only [exact]",
+      "Selectivity": 1,
+      "RecallAtK": 0.9895833333333334,
+      "P50Ms": 27.572,
+      "P95Ms": 33.3741,
+      "P99Ms": 90.3208,
+      "AvgRowsScored": 2000000,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B busiest source",
+      "Selectivity": 0.212988,
+      "RecallAtK": 0.9854166666666668,
+      "P50Ms": 1.8333,
+      "P95Ms": 2.081,
+      "P99Ms": 2.6376,
+      "AvgRowsScored": 22637.75,
+      "IvfSegmentsPerQuery": 2
+    },
+    {
+      "Scenario": "tenant \u002B busiest source [exact]",
+      "Selectivity": 0.212988,
+      "RecallAtK": 0.9854166666666668,
+      "P50Ms": 10.8123,
+      "P95Ms": 21.9542,
+      "P99Ms": 22.319,
+      "AvgRowsScored": 425976,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source",
+      "Selectivity": 0.00282,
+      "RecallAtK": 0.99375,
+      "P50Ms": 1.78,
+      "P95Ms": 2.514,
+      "P99Ms": 2.7644,
+      "AvgRowsScored": 5640,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source [exact]",
+      "Selectivity": 0.00282,
+      "RecallAtK": 0.99375,
+      "P50Ms": 1.2223,
+      "P95Ms": 1.3749,
+      "P99Ms": 1.3864,
+      "AvgRowsScored": 5640,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B 2 tokens (AND)",
+      "Selectivity": 0.2835725,
+      "RecallAtK": 0.9833333333333334,
+      "P50Ms": 1.8185,
+      "P95Ms": 2.1342,
+      "P99Ms": 2.4665,
+      "AvgRowsScored": 24430.9,
+      "IvfSegmentsPerQuery": 2
+    },
+    {
+      "Scenario": "tenant \u002B 2 tokens (AND) [exact]",
+      "Selectivity": 0.2835725,
+      "RecallAtK": 0.9833333333333334,
+      "P50Ms": 13.5482,
+      "P95Ms": 14.9832,
+      "P99Ms": 15.1846,
+      "AvgRowsScored": 567145,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B token OR \u002B NOT",
+      "Selectivity": 0.2081885,
+      "RecallAtK": 0.9812499999999998,
+      "P50Ms": 2.1182,
+      "P95Ms": 2.6383,
+      "P99Ms": 3.4455,
+      "AvgRowsScored": 22486,
+      "IvfSegmentsPerQuery": 2
+    },
+    {
+      "Scenario": "tenant \u002B token OR \u002B NOT [exact]",
+      "Selectivity": 0.2081885,
+      "RecallAtK": 0.9812499999999998,
+      "P50Ms": 11.1311,
+      "P95Ms": 11.8158,
+      "P99Ms": 11.9254,
+      "AvgRowsScored": 416377,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B last 20% of time",
+      "Selectivity": 0.2,
+      "RecallAtK": 0.9791666666666666,
+      "P50Ms": 2.1005,
+      "P95Ms": 3.3476,
+      "P99Ms": 5.2881,
+      "AvgRowsScored": 17449.3,
+      "IvfSegmentsPerQuery": 1
+    },
+    {
+      "Scenario": "tenant \u002B last 20% of time [exact]",
+      "Selectivity": 0.2,
+      "RecallAtK": 0.9791666666666666,
+      "P50Ms": 8.1549,
+      "P95Ms": 9.0467,
+      "P99Ms": 9.2507,
+      "AvgRowsScored": 400000,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source \u002B 5% of time",
+      "Selectivity": 0.000137,
+      "RecallAtK": 0.9895833333333334,
+      "P50Ms": 1.9559,
+      "P95Ms": 3.0208,
+      "P99Ms": 3.1452,
+      "AvgRowsScored": 274,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source \u002B 5% of time [exact]",
+      "Selectivity": 0.000137,
+      "RecallAtK": 0.9895833333333334,
+      "P50Ms": 1.6836,
+      "P95Ms": 2.2414,
+      "P99Ms": 2.2736,
+      "AvgRowsScored": 274,
+      "IvfSegmentsPerQuery": 0
+    }
+  ],
+  "log": [
+    "[10:13:45] ingest done: 94,326 rows/s (0.4 min) {\u0022Segments\u0022:8,\u0022IvfSegments\u0022:0,\u0022SegmentRows\u0022:2000000,\u0022LiveSegmentRows\u0022:2000000,\u0022BufferedRows\u0022:0,\u0022DiskBytes\u0022:1889861656,\u0022Checkpoint\u0022:\u0022bench\u0022}",
+    "[10:14:58] compaction round 1: replaced 8 segments, 1.2 min so far",
+    "[10:14:58] compaction round 2: replaced 0 segments, 1.2 min so far",
+    "[10:14:58] compaction done in 1.2 min: {\u0022Segments\u0022:2,\u0022IvfSegments\u0022:2,\u0022SegmentRows\u0022:2000000,\u0022LiveSegmentRows\u0022:2000000,\u0022BufferedRows\u0022:0,\u0022DiskBytes\u0022:1901958941,\u0022Checkpoint\u0022:\u0022bench\u0022}",
+    "[10:14:58] disk 1.9 GB = 951 B/vector; managed heap 0.45 GB",
+    "[10:15:00] ground truth: 0.0 min",
+    "[10:15:00] tenant only                        sel 100.000%  recall 0.990  p50      8.4 ms  p95     21.9 ms  p99     39.1 ms  scored       86,052  ivf/q 2.0",
+    "[10:15:01] tenant only [exact]                sel 100.000%  recall 0.990  p50     27.6 ms  p95     33.4 ms  p99     90.3 ms  scored    2,000,000  ivf/q 0.0",
+    "[10:15:01] tenant \u002B busiest source            sel  21.299%  recall 0.985  p50      1.8 ms  p95      2.1 ms  p99      2.6 ms  scored       22,638  ivf/q 2.0",
+    "[10:15:01] tenant \u002B busiest source [exact]    sel  21.299%  recall 0.985  p50     10.8 ms  p95     22.0 ms  p99     22.3 ms  scored      425,976  ivf/q 0.0",
+    "[10:15:01] tenant \u002B mid source                sel   0.282%  recall 0.994  p50      1.8 ms  p95      2.5 ms  p99      2.8 ms  scored        5,640  ivf/q 0.0",
+    "[10:15:01] tenant \u002B mid source [exact]        sel   0.282%  recall 0.994  p50      1.2 ms  p95      1.4 ms  p99      1.4 ms  scored        5,640  ivf/q 0.0",
+    "[10:15:01] tenant \u002B 2 tokens (AND)            sel  28.357%  recall 0.983  p50      1.8 ms  p95      2.1 ms  p99      2.5 ms  scored       24,431  ivf/q 2.0",
+    "[10:15:01] tenant \u002B 2 tokens (AND) [exact]    sel  28.357%  recall 0.983  p50     13.5 ms  p95     15.0 ms  p99     15.2 ms  scored      567,145  ivf/q 0.0",
+    "[10:15:01] tenant \u002B token OR \u002B NOT            sel  20.819%  recall 0.981  p50      2.1 ms  p95      2.6 ms  p99      3.4 ms  scored       22,486  ivf/q 2.0",
+    "[10:15:02] tenant \u002B token OR \u002B NOT [exact]    sel  20.819%  recall 0.981  p50     11.1 ms  p95     11.8 ms  p99     11.9 ms  scored      416,377  ivf/q 0.0",
+    "[10:15:02] tenant \u002B last 20% of time          sel  20.000%  recall 0.979  p50      2.1 ms  p95      3.3 ms  p99      5.3 ms  scored       17,449  ivf/q 1.0",
+    "[10:15:02] tenant \u002B last 20% of time [exact]  sel  20.000%  recall 0.979  p50      8.2 ms  p95      9.0 ms  p99      9.3 ms  scored      400,000  ivf/q 0.0",
+    "[10:15:02] tenant \u002B mid source \u002B 5% of time   sel   0.014%  recall 0.990  p50      2.0 ms  p95      3.0 ms  p99      3.1 ms  scored          274  ivf/q 0.0",
+    "[10:15:02] tenant \u002B mid source \u002B 5% of time [exact] sel   0.014%  recall 0.990  p50      1.7 ms  p95      2.2 ms  p99      2.3 ms  scored          274  ivf/q 0.0"
+  ],
+  "machine": {
+    "ProcessorCount": 24,
+    "ramBytes": 68135153664,
+    "os": "Microsoft Windows NT 10.0.26200.0"
+  }
+}

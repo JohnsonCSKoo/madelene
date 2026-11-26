@@ -1,0 +1,162 @@
+{
+  "options": {
+    "Rows": 50000,
+    "Dimensions": 768,
+    "Queries": 50,
+    "K": 24,
+    "Candidates": 360,
+    "Days": 2,
+    "BucketDays": 7,
+    "Sources": 200,
+    "Vocabulary": 500,
+    "TokensPerRow": 18,
+    "Clusters": 1000,
+    "ModalityGap": 0.5,
+    "SealRows": 20000,
+    "IvfMinRows": 400000,
+    "ProbeFraction": 0.03,
+    "ExactScanThreshold": 100000,
+    "Keep": false,
+    "Seed": 7
+  },
+  "rows": 50000,
+  "dims": 768,
+  "ingestRowsPerSecond": 32996.89914939933,
+  "compactSeconds": 0.0006429,
+  "index": {
+    "Segments": 3,
+    "IvfSegments": 0,
+    "SegmentRows": 50000,
+    "LiveSegmentRows": 50000,
+    "BufferedRows": 0,
+    "DiskBytes": 47257609,
+    "Checkpoint": "bench"
+  },
+  "bytesPerVector": 945.15218,
+  "results": [
+    {
+      "Scenario": "tenant only",
+      "Selectivity": 1,
+      "RecallAtK": 0.9925,
+      "P50Ms": 4.6991,
+      "P95Ms": 5.4464,
+      "P99Ms": 24.501,
+      "AvgRowsScored": 50000,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant only [exact]",
+      "Selectivity": 1,
+      "RecallAtK": 0.9925,
+      "P50Ms": 5.9944,
+      "P95Ms": 7.5993,
+      "P99Ms": 12.5371,
+      "AvgRowsScored": 50000,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B busiest source",
+      "Selectivity": 0.20946,
+      "RecallAtK": 0.9250000000000003,
+      "P50Ms": 0.9952,
+      "P95Ms": 1.186,
+      "P99Ms": 3.8906,
+      "AvgRowsScored": 10473,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B busiest source [exact]",
+      "Selectivity": 0.20946,
+      "RecallAtK": 0.99,
+      "P50Ms": 1.7466,
+      "P95Ms": 1.9209,
+      "P99Ms": 2.2385,
+      "AvgRowsScored": 10473,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source",
+      "Selectivity": 0.0029,
+      "RecallAtK": 0.9941666666666668,
+      "P50Ms": 0.213,
+      "P95Ms": 0.2711,
+      "P99Ms": 0.5737,
+      "AvgRowsScored": 145,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source [exact]",
+      "Selectivity": 0.0029,
+      "RecallAtK": 0.9941666666666668,
+      "P50Ms": 0.1465,
+      "P95Ms": 0.1786,
+      "P99Ms": 2.1327,
+      "AvgRowsScored": 145,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B 2 tokens (AND)",
+      "Selectivity": 0.2839,
+      "RecallAtK": 0.9458333333333332,
+      "P50Ms": 0.8599,
+      "P95Ms": 1.039,
+      "P99Ms": 1.2252,
+      "AvgRowsScored": 14195,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B 2 tokens (AND) [exact]",
+      "Selectivity": 0.2839,
+      "RecallAtK": 0.9941666666666668,
+      "P50Ms": 1.99,
+      "P95Ms": 2.3395,
+      "P99Ms": 2.7245,
+      "AvgRowsScored": 14195,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B token OR \u002B NOT",
+      "Selectivity": 0.20926,
+      "RecallAtK": 0.9283333333333332,
+      "P50Ms": 0.6374,
+      "P95Ms": 0.8424,
+      "P99Ms": 1.3701,
+      "AvgRowsScored": 10463,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B token OR \u002B NOT [exact]",
+      "Selectivity": 0.20926,
+      "RecallAtK": 0.9858333333333336,
+      "P50Ms": 1.4615,
+      "P95Ms": 1.7478,
+      "P99Ms": 2.1333,
+      "AvgRowsScored": 10463,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B last 20% of time",
+      "Selectivity": 0.20128,
+      "RecallAtK": 0.9275000000000001,
+      "P50Ms": 0.8591,
+      "P95Ms": 1.8795,
+      "P99Ms": 12.7364,
+      "AvgRowsScored": 10064,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B last 20% of time [exact]",
+      "Selectivity": 0.20128,
+      "RecallAtK": 0.9908333333333335,
+      "P50Ms": 1.6695,
+      "P95Ms": 1.8112,
+      "P99Ms": 2.1281,
+      "AvgRowsScored": 10064,
+      "IvfSegmentsPerQuery": 0
+    }
+  ],
+  "machine": {
+    "ProcessorCount": 24,
+    "os": "Microsoft Windows NT 10.0.26200.0"
+  }
+}

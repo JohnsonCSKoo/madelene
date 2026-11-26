@@ -1,0 +1,182 @@
+{
+  "options": {
+    "Rows": 3000000,
+    "Dimensions": 768,
+    "Queries": 100,
+    "K": 24,
+    "Candidates": 360,
+    "Days": 3,
+    "BucketDays": 1,
+    "Sources": 200,
+    "Vocabulary": 500,
+    "TokensPerRow": 18,
+    "Clusters": 1000,
+    "ModalityGap": 0.5,
+    "SealRows": 250000,
+    "IvfMinRows": 1000000,
+    "ProbeFraction": 0.03,
+    "ExactScanThreshold": 100000,
+    "Keep": false,
+    "Seed": 7
+  },
+  "rows": 3000000,
+  "dims": 768,
+  "ingestRowsPerSecond": 86179.95120129207,
+  "compactSeconds": 81.5063544,
+  "index": {
+    "Segments": 3,
+    "IvfSegments": 2,
+    "SegmentRows": 3000000,
+    "LiveSegmentRows": 3000000,
+    "BufferedRows": 0,
+    "DiskBytes": 2847299151,
+    "Checkpoint": "bench"
+  },
+  "bytesPerVector": 949.099717,
+  "results": [
+    {
+      "Scenario": "tenant only",
+      "Selectivity": 1,
+      "RecallAtK": 0.959583333333333,
+      "P50Ms": 7.3593,
+      "P95Ms": 16.7762,
+      "P99Ms": 31.9974,
+      "AvgRowsScored": 1082802.38,
+      "IvfSegmentsPerQuery": 2
+    },
+    {
+      "Scenario": "tenant only [exact]",
+      "Selectivity": 1,
+      "RecallAtK": 0.9799999999999998,
+      "P50Ms": 99.0946,
+      "P95Ms": 110.408,
+      "P99Ms": 114.1,
+      "AvgRowsScored": 3000000,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B busiest source",
+      "Selectivity": 0.2129,
+      "RecallAtK": 0.9866666666666661,
+      "P50Ms": 4.1195,
+      "P95Ms": 5.3771,
+      "P99Ms": 7.3132,
+      "AvgRowsScored": 234300.95,
+      "IvfSegmentsPerQuery": 2
+    },
+    {
+      "Scenario": "tenant \u002B busiest source [exact]",
+      "Selectivity": 0.2129,
+      "RecallAtK": 0.9866666666666661,
+      "P50Ms": 33.1485,
+      "P95Ms": 35.9021,
+      "P99Ms": 39.1652,
+      "AvgRowsScored": 638700,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source",
+      "Selectivity": 0.0028213333333333332,
+      "RecallAtK": 0.9874999999999997,
+      "P50Ms": 1.7196,
+      "P95Ms": 2.1628,
+      "P99Ms": 3.1362,
+      "AvgRowsScored": 8464,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source [exact]",
+      "Selectivity": 0.0028213333333333332,
+      "RecallAtK": 0.9895833333333331,
+      "P50Ms": 1.75,
+      "P95Ms": 2.2736,
+      "P99Ms": 2.6939,
+      "AvgRowsScored": 8464,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B 2 tokens (AND)",
+      "Selectivity": 0.28325066666666665,
+      "RecallAtK": 0.9824999999999997,
+      "P50Ms": 4.3606,
+      "P95Ms": 5.6542,
+      "P99Ms": 6.8151,
+      "AvgRowsScored": 306762.1,
+      "IvfSegmentsPerQuery": 2
+    },
+    {
+      "Scenario": "tenant \u002B 2 tokens (AND) [exact]",
+      "Selectivity": 0.28325066666666665,
+      "RecallAtK": 0.9824999999999997,
+      "P50Ms": 40.5957,
+      "P95Ms": 42.7867,
+      "P99Ms": 43.8755,
+      "AvgRowsScored": 849752,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B token OR \u002B NOT",
+      "Selectivity": 0.20746133333333333,
+      "RecallAtK": 0.984583333333333,
+      "P50Ms": 4.7182,
+      "P95Ms": 5.9523,
+      "P99Ms": 7.1654,
+      "AvgRowsScored": 229091.75,
+      "IvfSegmentsPerQuery": 2
+    },
+    {
+      "Scenario": "tenant \u002B token OR \u002B NOT [exact]",
+      "Selectivity": 0.20746133333333333,
+      "RecallAtK": 0.984583333333333,
+      "P50Ms": 32.9987,
+      "P95Ms": 35.437,
+      "P99Ms": 37.5117,
+      "AvgRowsScored": 622384,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B last 20% of time",
+      "Selectivity": 0.19970933333333332,
+      "RecallAtK": 0.9849999999999998,
+      "P50Ms": 7.0024,
+      "P95Ms": 8.3797,
+      "P99Ms": 9.6588,
+      "AvgRowsScored": 599128,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B last 20% of time [exact]",
+      "Selectivity": 0.19970933333333332,
+      "RecallAtK": 0.9849999999999998,
+      "P50Ms": 17.0248,
+      "P95Ms": 19.307,
+      "P99Ms": 19.5753,
+      "AvgRowsScored": 599128,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source \u002B 5% of time",
+      "Selectivity": 0.00013966666666666666,
+      "RecallAtK": 0.9916666666666663,
+      "P50Ms": 6.6024,
+      "P95Ms": 7.7924,
+      "P99Ms": 8.8649,
+      "AvgRowsScored": 419,
+      "IvfSegmentsPerQuery": 0
+    },
+    {
+      "Scenario": "tenant \u002B mid source \u002B 5% of time [exact]",
+      "Selectivity": 0.00013966666666666666,
+      "RecallAtK": 0.9916666666666663,
+      "P50Ms": 6.4526,
+      "P95Ms": 7.7579,
+      "P99Ms": 8.7822,
+      "AvgRowsScored": 419,
+      "IvfSegmentsPerQuery": 0
+    }
+  ],
+  "machine": {
+    "ProcessorCount": 24,
+    "os": "Microsoft Windows NT 10.0.26200.0"
+  }
+}
