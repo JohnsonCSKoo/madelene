@@ -7,7 +7,7 @@
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
-    <Authors>Madelene contributors</Authors>
+    <Authors>Johnson Khoo</Authors>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <Version>0.2.0-alpha.1</Version>
     <PackageProjectUrl>https://johnsoncskoo.github.io/madelene/</PackageProjectUrl>
