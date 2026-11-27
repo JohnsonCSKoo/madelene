@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+<head>
+<script>try { const t = localStorage.getItem('theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<meta name="color-scheme" content="dark light">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Madelene: filtered vector search on disk</title>
+<meta name="description" content="An embedded .NET library that answers MongoDB $vectorSearch queries from NVMe, for vector indexes bigger than RAM.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Madelene: filtered vector search on disk">
+<meta property="og:description" content="An embedded .NET library that answers MongoDB $vectorSearch queries from NVMe, for vector indexes bigger than RAM.">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="nav-wrap">
+  <nav class="nav container" aria-label="Main">
+    <a class="wordmark" href="#top">Madelene</a>
+    <ul class="nav-links">
+      <li><a href="#query">How a query runs</a></li>
+      <li><a href="#numbers">The numbers</a></li>
+      <li><a href="#mongo">With MongoDB</a></li>
+    </ul>
+    <button class="theme-toggle" type="button" aria-label="Switch to light theme" hidden>
+      <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z"/></svg>
+    </button>
+    <a class="btn btn--quiet nav-action" href="https://github.com/JohnsonCSKoo/madelene">GitHub</a>
+  </nav>
+</header>
+
+<main id="main">
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1 id="hero-title">Vector search for indexes bigger than RAM</h1>
+        <p class="lead">An embedded .NET library that answers MongoDB <code>$vectorSearch</code> queries from NVMe.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="https://github.com/JohnsonCSKoo/madelene">View on GitHub</a>
+          <a class="btn btn--quiet" href="https://github.com/JohnsonCSKoo/madelene/blob/main/docs/GUIDE.md">Read the guide</a>
+        </div>
+        <p class="status">Prototype, version 0.2. Apache-2.0.</p>
+      </div>
+
+      <div class="planner well ticks" role="group" aria-labelledby="planner-title">
+        <div class="planner-head">
+          <p class="planner-title" id="planner-title">100M vectors in 100 daily segments</p>
+          <p class="planner-size"><span class="measure">95<small>GB</small></span> on disk, <span class="measure">64<small>GB</small></span> RAM</p>
+        </div>
+        <fieldset class="seg">
+          <legend class="visually-hidden">Filter</legend>
+          <input type="radio" name="q" id="q1" checked><label for="q1">Tenant only</label>
+          <input type="radio" name="q" id="q2"><label for="q2">+ busiest source</label>
+          <input type="radio" name="q" id="q3"><label for="q3">+ mid source</label>
+          <input type="radio" name="q" id="q4"><label for="q4">+ 2 tokens</label>
+          <input type="radio" name="q" id="q5"><label for="q5">+ token OR, NOT</label>
+          <input type="radio" name="q" id="q6"><label for="q6">+ last 20% of time</label>
+          <input type="radio" name="q" id="q7"><label for="q7">+ mid source, 5% of time</label>
+        </fieldset>
+        <div class="days" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <ul class="key" aria-hidden="true">
+          <li><i class="key-on"></i>Segment searched</li>
+          <li><i class="key-off"></i>Skipped by time</li>
+          <li><i class="key-fill"></i>Rows matching</li>
+        </ul>
+        <dl class="readout" aria-live="polite">
+          <div><dt>Matching</dt><dd class="measure"><span data-q="1">100<small>%</small></span><span data-q="2">21.3<small>%</small></span><span data-q="3">0.28<small>%</small></span><span data-q="4">28.4<small>%</small></span><span data-q="5">20.8<small>%</small></span><span data-q="6">20.0<small>%</small></span><span data-q="7">0.014<small>%</small></span></dd></div>
+          <div><dt>Rows scored</dt><dd class="measure"><span data-q="1">568<small>k</small></span><span data-q="2">121<small>k</small></span><span data-q="3">281<small>k</small></span><span data-q="4">161<small>k</small></span><span data-q="5">118<small>k</small></span><span data-q="6">228<small>k</small></span><span data-q="7">14<small>k</small></span></dd></div>
+          <div><dt>Recall@24</dt><dd class="measure"><span data-q="1">0.951</span><span data-q="2">0.983</span><span data-q="3">0.984</span><span data-q="4">0.970</span><span data-q="5">0.972</span><span data-q="6">0.978</span><span data-q="7">0.993</span></dd></div>
+          <div><dt>p50</dt><dd class="measure"><span data-q="1">17.4<small>ms</small></span><span data-q="2">17.3<small>ms</small></span><span data-q="3">21.3<small>ms</small></span><span data-q="4">17.8<small>ms</small></span><span data-q="5">18.7<small>ms</small></span><span data-q="6">11.9<small>ms</small></span><span data-q="7">4.7<small>ms</small></span></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="query" aria-labelledby="query-title">
+    <div class="container">
+      <div class="head-split reveal">
+        <h2 id="query-title">How a query reads the disk</h2>
+        <p class="lead">One vector takes 952 bytes on disk. A query barely touches the biggest part.</p>
+      </div>
+      <div class="pinned reveal">
+        <div class="pin-visual">
+          <div class="bytes well ticks" data-step="0">
+            <svg class="byte-map" viewBox="0 0 408 336" role="img" aria-label="The 952 bytes of one vector on disk, one square per byte, grouped by part">
+              <defs><pattern id="cell" width="12" height="12" patternUnits="userSpaceOnUse"><rect class="cell" width="10" height="10"/></pattern><mask id="cells" style="mask-type: alpha"><rect width="408" height="336" fill="url(#cell)"/></mask></defs><g mask="url(#cells)"><g class="part p-time"><rect x="0" y="0" width="96" height="12"/></g><g class="part p-ids"><rect x="96" y="0" width="312" height="12"/><rect x="0" y="12" width="12" height="12"/></g><g class="part p-post"><rect x="12" y="12" width="396" height="12"/><rect x="0" y="24" width="144" height="12"/></g><g class="part p-code"><rect x="144" y="24" width="264" height="12"/><rect x="0" y="36" width="408" height="12"/><rect x="0" y="48" width="408" height="12"/><rect x="0" y="60" width="120" height="12"/></g><g class="part p-int8"><rect x="120" y="60" width="288" height="12"/><rect x="0" y="72" width="408" height="12"/><rect x="0" y="84" width="408" height="12"/><rect x="0" y="96" width="408" height="12"/><rect x="0" y="108" width="408" height="12"/><rect x="0" y="120" width="408" height="12"/><rect x="0" y="132" width="408" height="12"/><rect x="0" y="144" width="408" height="12"/><rect x="0" y="156" width="408" height="12"/><rect x="0" y="168" width="408" height="12"/><rect x="0" y="180" width="408" height="12"/><rect x="0" y="192" width="408" height="12"/><rect x="0" y="204" width="408" height="12"/><rect x="0" y="216" width="408" height="12"/><rect x="0" y="228" width="408" height="12"/><rect x="0" y="240" width="408" height="12"/><rect x="0" y="252" width="408" height="12"/><rect x="0" y="264" width="408" height="12"/><rect x="0" y="276" width="408" height="12"/><rect x="0" y="288" width="408" height="12"/><rect x="0" y="300" width="408" height="12"/><rect x="0" y="312" width="408" height="12"/><rect x="0" y="324" width="408" height="12"/></g></g>
+            </svg>
+            <ul class="byte-key">
+              <li class="k-time"><span>Time column</span><span class="measure">8<small>B</small></span></li>
+              <li class="k-ids"><span>Id, id hash, bloom</span><span class="measure">27<small>B</small></span></li>
+              <li class="k-post"><span>Posting lists</span><span class="measure">45<small>B</small></span></li>
+              <li class="k-code"><span>1-bit code</span><span class="measure">100<small>B</small></span></li>
+              <li class="k-int8"><span>int8 vector</span><span class="measure">772<small>B</small></span></li>
+            </ul>
+          </div>
+        </div>
+        <ol class="steps">
+          <li class="step" data-step="1">
+            <h3>Skip by time</h3>
+            <p>Segments are bucketed by day, so a time filter drops whole segments unread.</p>
+          </li>
+          <li class="step" data-step="2">
+            <h3>Turn the filter into a bitset</h3>
+            <p>Posting lists become a bitset of matching rows, with MongoDB’s multikey rules.</p>
+          </li>
+          <li class="step" data-step="3">
+            <h3>Score 1-bit codes</h3>
+            <p>Every matching row for a narrow filter; the nearest IVF lists for a broad one.</p>
+          </li>
+          <li class="step" data-step="4">
+            <h3>Rescore with int8</h3>
+            <p>Only the top candidates read their int8 vectors. MongoDB fetches the documents.</p>
+          </li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band" id="numbers" aria-labelledby="numbers-title">
+    <div class="container">
+      <div class="head-split reveal">
+        <h2 id="numbers-title">The 100M benchmark</h2>
+        <p class="lead">One 24-core desktop with 64 GB of RAM and local NVMe.</p>
+      </div>
+      <dl class="figures reveal">
+        <div><dt>Disk per vector</dt><dd class="measure">952<small>B</small></dd></div>
+        <div><dt>Managed heap</dt><dd class="measure">0.64<small>GB</small></dd></div>
+        <div><dt>Compacting 400 segments into 100</dt><dd class="measure">64<small>min</small></dd></div>
+        <div><dt>Queries per second, 16 clients</dt><dd class="measure">111.6</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" id="mongo" aria-labelledby="mongo-title">
+    <div class="container">
+      <div class="head-split reveal">
+        <h2 id="mongo-title">Alongside MongoDB</h2>
+        <p class="lead">MongoDB stays the record; the index can be dropped and rebuilt.</p>
+      </div>
+      <div class="bento reveal">
+        <div class="tile tile--code">
+          <h3>Pipeline rewrite</h3>
+<pre class="code" tabindex="0" aria-label="C# example: rewrite a pipeline, fall back on unsupported filters"><code><span class="c-t">try</span>
+{
+  <span class="c-t">var</span> rewritten = MongoVectorSearch
+    .RewritePipeline(
+      engine, pipeline, <span class="c-t">out</span> _);
+  <span class="c-t">var</span> docs = <span class="c-t">await</span> items
+    .Aggregate&lt;BsonDocument&gt;(rewritten)
+    .ToListAsync();
+}
+<span class="c-t">catch</span> (FilterNotSupportedException)
+{
+<span class="c-c">  // fall back to MongoDB</span>
+}</code></pre>
+        </div>
+        <div class="tile">
+          <h3>One stage replaced</h3>
+          <p>The first stage becomes a <code>$match</code> on ids; the rest runs unchanged.</p>
+        </div>
+        <div class="tile">
+          <h3>Unsupported filters fall back</h3>
+          <p>They throw, and the original pipeline runs on MongoDB.</p>
+        </div>
+        <div class="tile tile--flow">
+          <h3>Write path</h3>
+          <ol class="flow">
+            <li><span>Change stream</span></li>
+            <li><span>Write buffer</span></li>
+            <li><span>Sealed segments</span></li>
+            <li><span>Compacted by day</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="surface" aria-labelledby="surface-title">
+    <div class="container surface reveal">
+      <h2 id="surface-title">The <code>$vectorSearch</code> it answers</h2>
+      <dl class="rows">
+        <div><dt>Filter operators</dt><dd><code>$and</code> <code>$or</code> <code>$nor</code> <code>$not</code> <code>$eq</code> <code>$ne</code> <code>$in</code> <code>$nin</code> <code>$gt</code> <code>$gte</code> <code>$lt</code> <code>$lte</code></dd></div>
+                <div><dt>Scores</dt><dd>Cosine or dot product, scored as in MongoDB.</dd></div>
+        <div><dt>Runs on</dt><dd>.NET 10 and NVMe; sync needs a replica set.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="section close" aria-labelledby="close-title">
+    <div class="container close-grid reveal">
+      <div>
+        <h2 id="close-title">Measure it with your own vectors</h2>
+        <p class="lead">The figures on this page come from synthetic data.</p>
+        <div class="actions">
+          <a class="btn btn--primary" href="https://github.com/JohnsonCSKoo/madelene/blob/main/docs/GUIDE.md">Read the guide</a>
+          <a class="btn btn--quiet" href="https://github.com/JohnsonCSKoo/madelene/blob/main/docs/ARCHITECTURE.md#14-known-gaps">Known gaps</a>
+        </div>
+      </div>
+<pre class="code well ticks" tabindex="0" aria-label="Benchmark command"><code>dotnet run -c Release \
+  --project tools/Madelene.Bench -- \
+  --vectors data.npy \
+  --query-vectors queries.npy \
+  --rows 5000000</code></pre>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <p class="mast">Madelene</p>
+    <div class="footer-row">
+      <ul class="footer-links">
+        <li><a href="https://github.com/JohnsonCSKoo/madelene/blob/main/docs/GUIDE.md">Guide</a></li>
+        <li><a href="https://github.com/JohnsonCSKoo/madelene/blob/main/docs/ARCHITECTURE.md">Architecture</a></li>
+        <li><a href="https://github.com/JohnsonCSKoo/madelene/blob/main/docs/benchmarks/README.md">Benchmarks</a></li>
+        <li><a href="https://github.com/JohnsonCSKoo/madelene/blob/main/CHANGELOG.md">Changelog</a></li>
+        <li><a href="https://github.com/JohnsonCSKoo/madelene">Source</a></li>
+      </ul>
+      <p class="legal">Apache-2.0</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  document.documentElement.classList.add('js');
+  document.querySelectorAll('.days i').forEach((c, i) => c.style.setProperty('--d', i));
+  const reveals = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const ro = new IntersectionObserver((entries) => {
+      for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); ro.unobserve(e.target); }
+    }, { rootMargin: '0px 0px -12% 0px' });
+    reveals.forEach((r) => ro.observe(r));
+  } else reveals.forEach((r) => r.classList.add('in'));
+  const root = document.documentElement;
+  const toggle = document.querySelector('.theme-toggle');
+  const sys = matchMedia('(prefers-color-scheme: light)');
+  const current = () => root.dataset.theme || (sys.matches ? 'light' : 'dark');
+  const label = () => toggle.setAttribute('aria-label', current() === 'dark' ? 'Switch to light theme' : 'Switch to dark theme');
+  toggle.hidden = false;
+  label();
+  sys.addEventListener('change', label);
+  toggle.addEventListener('click', () => {
+    const next = current() === 'dark' ? 'light' : 'dark';
+    root.dataset.theme = next;
+    try { localStorage.setItem('theme', next); } catch (e) {}
+    label();
+  });
+  const bytes = document.querySelector('.bytes');
+  const steps = document.querySelectorAll('.step');
+  if (!bytes || !('IntersectionObserver' in window)) return;
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) bytes.dataset.step = e.target.dataset.step;
+  }, { rootMargin: '-45% 0px -45% 0px' });
+  steps.forEach((s) => io.observe(s));
+})();
+</script>
+</body>
+</html>
