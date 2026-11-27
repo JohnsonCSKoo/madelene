@@ -9,6 +9,15 @@
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <Authors>Madelene contributors</Authors>
     <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
-    <Version>0.2.0-prototype</Version>
+    <Version>0.2.0-alpha.1</Version>
+    <PackageProjectUrl>https://johnsoncskoo.github.io/madelene/</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/JohnsonCSKoo/madelene</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>vector-search;mongodb;vectorsearch;ann;embeddings</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <IsPackable>false</IsPackable>
+    <ContinuousIntegrationBuild Condition="'$(Configuration)' == 'Release'">true</ContinuousIntegrationBuild>
   </PropertyGroup>
 </Project>

@@ -1,0 +1,71 @@
+name: Release
+
+# Publishes Madelene.Core and Madelene.Mongo to nuget.org with trusted publishing:
+# no long-lived API key, only a one-hour key minted from this run's OIDC token.
+# Trigger: push a tag that matches the version in Directory.Build.props, e.g. v0.2.0-alpha.1.
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: Check the tag matches the package version
+        shell: pwsh
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          $version = (dotnet msbuild src/Madelene.Core/Madelene.Core.csproj -getProperty:Version).Trim()
+          if ("v$version" -ne $env:TAG) { throw "Tag $env:TAG does not match the package version $version" }
+
+      - run: dotnet build Madelene.slnx -c Release
+
+      - run: dotnet test Madelene.slnx -c Release --no-build
+
+      - run: dotnet pack src/Madelene.Core -c Release --no-build -o artifacts
+
+      - run: dotnet pack src/Madelene.Mongo -c Release --no-build -o artifacts
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: packages
+          path: artifacts/
+          if-no-files-found: error
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      id-token: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          name: packages
+          path: artifacts
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+
+      - name: NuGet login (OIDC to a short-lived API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      # The .snupkg symbol packages next to each .nupkg are pushed with it.
+      - name: Push to nuget.org
+        run: dotnet nuget push "artifacts/*.nupkg" --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json --skip-duplicate

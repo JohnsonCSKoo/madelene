@@ -7,16 +7,18 @@ at any time. It returns `_id`s and scores; MongoDB hydrates the documents.
 Built for the case where MongoDB's own vector index no longer fits in RAM: billions of 768-d embeddings on
 one machine with ~64–128 GB of RAM and NVMe storage.
 
+Install: `dotnet add package Madelene.Core --prerelease`, plus `Madelene.Mongo` for the MongoDB integration.
+
 > **Status: prototype (0.2).** Correctness is covered by tests (including a property test of the filter
 > engine and an end-to-end MongoDB change-stream test). Benchmarks so far use synthetic data. Read
-> [Known gaps](docs/ARCHITECTURE.md#14-known-gaps) before using it for anything real.
+> [Known gaps](https://github.com/JohnsonCSKoo/madelene/blob/main/docs/ARCHITECTURE.md#14-known-gaps) before using it for anything real.
 
 | Document | What it covers |
 |---|---|
-| [docs/GUIDE.md](docs/GUIDE.md) | Build, embed, configure, operate, tune and benchmark it. |
-| [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) | How it works: storage, encoding, query and write paths, durability, memory, performance. |
-| [CHANGELOG.md](CHANGELOG.md) | Each iteration: what changed, why, and what was measured. |
-| [docs/benchmarks/](docs/benchmarks/README.md) | Comparisons with Milvus, Qdrant, SPTAG/SPFresh, and the full-text experiment. |
+| [docs/GUIDE.md](https://github.com/JohnsonCSKoo/madelene/blob/main/docs/GUIDE.md) | Build, embed, configure, operate, tune and benchmark it. |
+| [docs/ARCHITECTURE.md](https://github.com/JohnsonCSKoo/madelene/blob/main/docs/ARCHITECTURE.md) | How it works: storage, encoding, query and write paths, durability, memory, performance. |
+| [CHANGELOG.md](https://github.com/JohnsonCSKoo/madelene/blob/main/CHANGELOG.md) | Each iteration: what changed, why, and what was measured. |
+| [docs/benchmarks/](https://github.com/JohnsonCSKoo/madelene/blob/main/docs/benchmarks/README.md) | Comparisons with Milvus, Qdrant, SPTAG/SPFresh, and the full-text experiment. |
 
 ## How it works (one paragraph)
 
@@ -26,7 +28,7 @@ int8 vectors (768 B) for rescoring, posting lists per filter value, a time colum
 segment is large. A query prunes segments by time, turns the filter into a row bitset, scores codes
 (all matching rows when the filter is narrow, the nearest IVF lists otherwise), rescores the best
 candidates with int8 vectors and returns MongoDB-normalized scores. Nothing per-vector has to live in
-RAM. Details: [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md).
+RAM. Details: [docs/ARCHITECTURE.md](https://github.com/JohnsonCSKoo/madelene/blob/main/docs/ARCHITECTURE.md).
 
 ## Projects
 
@@ -131,7 +133,7 @@ First pass (colder pages): 5–25 ms p50. Throughput, mixing all seven filters a
 
 Version 0.1 on the same index took 14–120 ms p50 and peaked at 28 QPS: its planner gave every segment the whole
 query's probe budget, so it scored 2–10M rows per broad query for the same recall. The comparison is in
-[docs/ARCHITECTURE.md](docs/ARCHITECTURE.md#100m-vectors-01-against-02). Ingest 87–94k vectors/s, compaction of
+[docs/ARCHITECTURE.md](https://github.com/JohnsonCSKoo/madelene/blob/main/docs/ARCHITECTURE.md#100m-vectors-01-against-02). Ingest 87–94k vectors/s, compaction of
 400 sealed segments into 100 IVF segments ~64 min on an idle machine, disk 952 B/vector, managed heap 0.64 GB.
 
 **1M vectors, one 1M-row IVF segment (2,000 lists), fully cached**
@@ -178,4 +180,4 @@ MADELENE_MONGO_URI="mongodb://localhost:27017/?directConnection=true" dotnet tes
 
 ## License
 
-Apache-2.0 (see [LICENSE](LICENSE)).
+Apache-2.0 (see [LICENSE](https://github.com/JohnsonCSKoo/madelene/blob/main/LICENSE)).
